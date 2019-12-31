@@ -1,4 +1,5 @@
-/* eslint-disable no-console */
+/* eslint-disable no-undef */
+
 const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGODB_URL, {
@@ -14,3 +15,4 @@ mongoose.connect(process.env.MONGODB_URL, {
 mongoose.set('debug', (collectionName, method, query, doc) => {
   console.log(`${collectionName}.${method}`, query, doc);
 });
+

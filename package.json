@@ -6,19 +6,25 @@
   "scripts": {
     "start": "node src/index.js",
     "docker": "env-cmd -f ./config/docker.env node src/index.js",
-    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js"
+    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js",
+    "test": "jest --runInBand ./tests"
   },
   "author": "Jakub Stochl",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^6.7.2",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.18.2",
+    "jest": "^24.9.0",
+    "mongodb-memory-server": "^6.2.1"
   },
   "dependencies": {
     "env-cmd": "^10.0.1",
     "express": "^4.17.1",
     "mongodb": "^3.3.5",
     "mongoose": "^5.7.14"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
