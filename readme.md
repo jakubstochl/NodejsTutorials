@@ -33,19 +33,18 @@ Following configurations are part of project:
 
 ## Exposed APIs and example of calls
 
-/notes
-POST method to create new note.
-Example: 
-curl -X POST \
-  http://localhost:80/notes \
-  -H 'Content-Type: application/json' \
-  -H 'cache-control: no-cache' \
-  -d '{
-	"title": "First Note",
-	"text" : "This is very first note"
-}'
-
-/notes
-GET method to retrieve all notes stored in db.
-Example:
+/notes  
+POST method to create new note.  
+Example:  
+    curl -X POST \
+        http://localhost:80/notes \
+        -H 'Content-Type: application/json' \
+        -H 'cache-control: no-cache' \
+        -d '{
+	        "title": "First Note",
+	        "text" : "This is very first note"
+            }'  
+/notes  
+GET method to retrieve all notes stored in db.  
+Example:  
 curl -X GET http://localhost:80/notes
