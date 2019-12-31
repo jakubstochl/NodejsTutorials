@@ -21,14 +21,20 @@ afterAll(async () => await dbHandler.closeDatabase());
  * Note test suite.
  */
 describe('note', () => {
-    test('should be created correcty', () => {
-        const note = new Note(noteComplete);
-        expect(note.save())
-            .resolves
-            .not
-            .toThrow();
+    it('create & save note successfully', async () => {
+        const validNote = new Note(noteComplete);
+        const savedNote = await validNote.save();
+        // Object Id should be defined when successfully saved to MongoDB.
+        expect(savedNote._id).toBeDefined();
+        expect(savedNote.title).toBe(noteComplete.title);
+        expect(savedNote.text).toBe(noteComplete.text);
     });
-    
+    it('insert note successfully, but the field does not defined in schema should be undefined', async () => {
+            const noteInvalidStructure = new Note({ id: 'SecondTest', text: 'Unit test 2', badField: 'should be undefined' });
+            const savedNoteInvalidStructure = await noteInvalidStructure.save();
+            expect(savedNoteInvalidStructure._id).toBeDefined();
+            expect(savedNoteInvalidStructure.badField).toBeUndefined();
+    });
 });
 
 /**
