@@ -1,11 +1,15 @@
 const express = require('express');
 const morgan = require('morgan');
-const winston = require('../config/winston');
-require('./db/mongoose');
+const logger = require('@lib/logger');
+const error  = require('@lib/error')
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./docs/swagger.json');
 const notesRouter = require('./routers/notes');
+const performanceRouter = require('./routers/performance');
 
 const app = express();
 
+// To check if necessary
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader(
@@ -21,8 +25,19 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use(morgan('combined', { stream: winston.stream }));
+app.use(morgan('combined', { stream: logger.winston.stream }));
 app.use(express.json());
-app.use(notesRouter);
+app.use('/api/v1', notesRouter);
+app.use('/api/v1/performance', performanceRouter);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/v1', notesRouter);
+// Handle errors
+app.use((err, req, res, next) => {
+    if (! err) {
+        return next();
+    }
+    error.handle(err, res);
+});
 
 module.exports = app;
