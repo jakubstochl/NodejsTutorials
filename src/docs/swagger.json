@@ -1,0 +1,114 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Node.js tutorial stuff",
+      "description": "Application used to show and test selected node.js features",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1",
+    "tags": [
+      {
+        "name": "Notes",
+        "description": "API for Notes module"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/notes/note": {
+        "post": {
+          "tags": [
+            "Notes"
+          ],
+          "description": "Create new note in application",
+          "parameters": [
+            {
+              "name": "note",
+              "in": "body",
+              "description": "Note to be created",
+              "schema": {
+                "$ref": "#/definitions/Note"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New note is created",
+              "schema": {
+                "$ref": "#/definitions/Note"
+              }
+            }
+          }
+        }
+      },
+      "/notes": {
+        "get": {
+          "tags": [
+            "Notes"
+          ],
+          "summary": "Get all notes in app",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Notes"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Note": {
+        "required": [
+          "title",
+          "_id"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "title": {
+            "type": "string",
+            "uniqueItems": false
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "NoteRequest": {
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "Notes": {
+        "type": "array",
+        "$ref": "#/definitions/Note"
+      }
+    }
+  }

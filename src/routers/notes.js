@@ -1,11 +1,12 @@
 const express = require('express');
-const logger = require('../../config/winston');
-const Note = require('../models/note');
+const logger = require('@lib/logger');
+const error = require('@lib/error');
+const notes = require('@components/notes');
 
 const router = new express.Router();
 
-router.post('/notes', (req, res) => {
-  const note = new Note(req.body);
+router.post('/note', (req, res) => {
+  const note = new notes.Note(req.body);
   note.save().then(() => {
     res.send(note);
   }).catch((error) => {
@@ -14,22 +15,27 @@ router.post('/notes', (req, res) => {
 });
 
 router.get('/notes', (req, res) => {
-  Note.find({}).then((notes) => {
+  notes.Note.find({}).then((notes) => {
     res.send(notes);
   }).catch((error) => {
-    res.status(500).send(error);
+    throw new error.ErrorHandler(500, error);
   });
 });
 
-router.get('/notes/title/:title', (req, res) => {
+router.get('/note/title/:title', (req, res) => {
   const input = req.params.title;
-  logger.debug(req.params);
+  logger.winston.debug(req.params);
   // eslint-disable-next-line prefer-template
-  Note.find({ title: { $regex: '.*' + input + '.*' } }).limit(5).then((notes) => {
+  notes.Note.find({ title: { $regex: '.*' + input + '.*' } }).limit(5).then((notes) => {
     res.send(notes);
   }).catch((error) => {
-    res.status(500).send(error);
+    throw new error.ErrorHandler(500, error);
   });
 });
+
+// Test error return
+router.get('/error', () => {
+  throw new error.ErrorHandler(500, 'Internal server error');
+})
 
 module.exports = router;

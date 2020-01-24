@@ -1,6 +1,12 @@
-# Notes tutorial application
+# Nodejs tutorial application
 
-This is tutorial Node.js application showing how to create basic node REST API service with underlying Mongo db and start it in Docker.
+This is tutorial Node.js application showing some basic concepts and features:
+* Exposed REST API with OpenAPI (swagger documentation).
+* Connection to Mongo db using Mongoose ODM.
+* Application containarization and start in Docker.
+* Logging using Winston library.
+* Central error handling.
+* Performance API showing Nodejs event loop performance and dangerous practices.
 
 ## Getting Started
 
